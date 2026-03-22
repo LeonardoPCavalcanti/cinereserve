@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from apps.movies.models import Movie
-from apps.seats.models import Room, Seat, SeatStatus
+from apps.seats.models import Room, Seat
 from apps.sessions.models import CinemaSession
 
 
@@ -26,7 +26,7 @@ class Command(BaseCommand):
         movies_data = [
             {
                 "title": "O Último Horizonte",
-                "description": "Uma jornada épica através de galáxias desconhecidas em busca de um novo lar para a humanidade.",
+                "description": "Uma jornada épica através de galáxias desconhecidas em busca de um novo lar.",
                 "duration_minutes": 148,
                 "genre": "Ficção Científica",
                 "director": "Ana Beatriz Costa",
@@ -44,7 +44,7 @@ class Command(BaseCommand):
             },
             {
                 "title": "Amor em Código",
-                "description": "Dois programadores rivais descobrem que o maior bug de suas vidas é não estarem juntos.",
+                "description": "Dois programadores rivais descobrem que o maior bug de suas vidas é o amor.",
                 "duration_minutes": 105,
                 "genre": "Comédia Romântica",
                 "director": "Mariana Ferreira",
@@ -53,7 +53,7 @@ class Command(BaseCommand):
             },
             {
                 "title": "A Floresta dos Espíritos",
-                "description": "Uma família se muda para uma casa antiga cercada por uma floresta que guarda segredos ancestrais.",
+                "description": "Uma família se muda para uma casa cercada por uma floresta de segredos.",
                 "duration_minutes": 115,
                 "genre": "Terror",
                 "director": "Pedro Henrique Dias",
@@ -71,7 +71,7 @@ class Command(BaseCommand):
             },
             {
                 "title": "O Pequeno Astronauta",
-                "description": "Um garoto sonhador constrói um foguete no quintal e embarca numa aventura intergaláctica.",
+                "description": "Um garoto sonhador constrói um foguete e embarca numa aventura intergaláctica.",
                 "duration_minutes": 95,
                 "genre": "Animação",
                 "director": "Fernanda Lima",
@@ -80,7 +80,7 @@ class Command(BaseCommand):
             },
             {
                 "title": "Revolução Silenciosa",
-                "description": "Baseado em fatos reais, conta a história de um movimento de resistência durante a ditadura.",
+                "description": "Baseado em fatos reais, a história de um movimento de resistência na ditadura.",
                 "duration_minutes": 155,
                 "genre": "Drama",
                 "director": "Gustavo Machado",
@@ -107,7 +107,7 @@ class Command(BaseCommand):
             },
             {
                 "title": "Memórias do Amanhã",
-                "description": "Uma cientista inventa um dispositivo que permite ver memórias do futuro, mas a que custo?",
+                "description": "Uma cientista inventa um dispositivo que permite ver memórias do futuro.",
                 "duration_minutes": 138,
                 "genre": "Ficção Científica",
                 "director": "Laura Mendonça",
