@@ -28,7 +28,9 @@ jobs:
         run: poetry run black --check .
 
       - name: Run isort (import order check)
-        run: poetry run isort --check-only --settings-file pyproject.toml .
+        run: |
+          poetry run isort --diff .
+          poetry run isort --check-only .
 
       - name: Run Flake8 (linting)
         run: poetry run flake8 apps/ core/ config/ --max-line-length=120 --exclude='*/migrations/*'
