@@ -25,10 +25,10 @@ jobs:
         run: poetry install --no-interaction
 
       - name: Run Black (format check)
-        run: poetry run black --check --exclude '/migrations/' .
+        run: poetry run black --check .
 
       - name: Run isort (import order check)
-        run: poetry run isort --check-only --skip-glob '*/migrations/*' .
+        run: poetry run isort --check-only --settings-file pyproject.toml .
 
       - name: Run Flake8 (linting)
         run: poetry run flake8 apps/ core/ config/ --max-line-length=120 --exclude='*/migrations/*'

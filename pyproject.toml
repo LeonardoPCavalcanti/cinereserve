@@ -51,3 +51,5 @@ profile = "black"
 line_length = 120
 skip_glob = ["*/migrations/*"]
 known_first_party = ["apps", "core", "config"]
+known_third_party = ["django", "rest_framework", "rest_framework_simplejwt", "drf_spectacular", "django_filters", "celery", "decouple", "redis"]
+src_paths = ["."]
