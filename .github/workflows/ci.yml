@@ -105,4 +105,4 @@ jobs:
         run: docker build -t cinereserve:test .
 
       - name: Verify Docker Compose config
-        run: docker compose config --quiet
+        run: cp .env.example .env && docker compose config --quiet
