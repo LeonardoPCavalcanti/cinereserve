@@ -5,12 +5,12 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.seats.models import SeatStatus, Seat
+from apps.seats.models import Seat, SeatStatus
 from apps.sessions.models import CinemaSession
 from apps.tickets.models import Ticket
 from apps.tickets.serializers import (
-    CheckoutSerializer,
     CheckoutResponseSerializer,
+    CheckoutSerializer,
     ReservationCreateSerializer,
     ReservationResponseSerializer,
     TicketSerializer,
@@ -51,9 +51,7 @@ class ReservationCreateView(generics.CreateAPIView):
 
         # Check SeatStatus
         try:
-            seat_status = SeatStatus.objects.get(
-                session=cinema_session, seat=seat
-            )
+            seat_status = SeatStatus.objects.get(session=cinema_session, seat=seat)
         except SeatStatus.DoesNotExist:
             return Response(
                 {"detail": "Seat status not found for this session."},
@@ -67,9 +65,7 @@ class ReservationCreateView(generics.CreateAPIView):
             )
 
         # Acquire Redis lock
-        lock_acquired = acquire_seat_lock(
-            str(session_id), str(seat_id), str(user.id)
-        )
+        lock_acquired = acquire_seat_lock(str(session_id), str(seat_id), str(user.id))
         if not lock_acquired:
             return Response(
                 {"detail": "Seat is currently being reserved by another user."},
@@ -101,9 +97,7 @@ class ReservationDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return SeatStatus.objects.filter(
-            locked_by=self.request.user, status="reserved"
-        )
+        return SeatStatus.objects.filter(locked_by=self.request.user, status="reserved")
 
     def perform_destroy(self, instance):
         # Release Redis lock
@@ -209,14 +203,11 @@ class TicketActiveListView(generics.ListAPIView):
     serializer_class = TicketSerializer
 
     def get_queryset(self):
-        return (
-            Ticket.objects.filter(
-                user=self.request.user,
-                status="active",
-                session__start_time__gt=timezone.now(),
-            )
-            .select_related("session", "session__movie", "session__room", "seat")
-        )
+        return Ticket.objects.filter(
+            user=self.request.user,
+            status="active",
+            session__start_time__gt=timezone.now(),
+        ).select_related("session", "session__movie", "session__room", "seat")
 
 
 class TicketHistoryListView(generics.ListAPIView):

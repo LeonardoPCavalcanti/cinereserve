@@ -25,10 +25,7 @@ class MovieSessionsListView(generics.ListAPIView):
 
     def get_queryset(self):
         movie_id = self.kwargs["movie_id"]
-        return (
-            CinemaSession.objects.filter(movie_id=movie_id, is_active=True)
-            .select_related("movie", "room")
-        )
+        return CinemaSession.objects.filter(movie_id=movie_id, is_active=True).select_related("movie", "room")
 
 
 @method_decorator(cache_page(CACHE_TTL_SESSIONS), name="dispatch")
@@ -49,9 +46,7 @@ class SessionSeatMapView(generics.GenericAPIView):
         try:
             session = CinemaSession.objects.select_related("room").get(pk=pk)
         except CinemaSession.DoesNotExist:
-            return Response(
-                {"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND
-            )
+            return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
 
         # Auto-create SeatStatus records if none exist for this session
         existing = SeatStatus.objects.filter(session=session).exists()

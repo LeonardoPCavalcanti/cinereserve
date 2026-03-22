@@ -48,9 +48,7 @@ class SeatStatus(models.Model):
         related_name="seat_statuses",
     )
     seat = models.ForeignKey(Seat, on_delete=models.CASCADE, related_name="statuses")
-    status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="available"
-    )
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="available")
     locked_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

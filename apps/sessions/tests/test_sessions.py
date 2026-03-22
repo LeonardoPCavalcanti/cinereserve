@@ -69,9 +69,7 @@ class CinemaSessionTests(TestCase):
 
     def test_end_time_computed_on_save(self):
         """end_time should be start_time + movie.duration_minutes."""
-        expected_end = self.session.start_time + timedelta(
-            minutes=self.movie.duration_minutes
-        )
+        expected_end = self.session.start_time + timedelta(minutes=self.movie.duration_minutes)
         self.assertEqual(self.session.end_time, expected_end)
 
     def test_list_sessions_for_movie(self):
@@ -121,9 +119,7 @@ class CinemaSessionTests(TestCase):
         )
 
         # Verify no SeatStatus exists for new session
-        self.assertEqual(
-            SeatStatus.objects.filter(session=new_session).count(), 0
-        )
+        self.assertEqual(SeatStatus.objects.filter(session=new_session).count(), 0)
 
         url = reverse("session-seats", kwargs={"pk": new_session.id})
         response = self.client.get(url)
@@ -131,9 +127,7 @@ class CinemaSessionTests(TestCase):
         self.assertEqual(response.status_code, 200)
         # Should have auto-created statuses for all 6 seats
         self.assertEqual(len(response.data["seats"]), 6)
-        self.assertEqual(
-            SeatStatus.objects.filter(session=new_session).count(), 6
-        )
+        self.assertEqual(SeatStatus.objects.filter(session=new_session).count(), 6)
 
         for seat_data in response.data["seats"]:
             self.assertEqual(seat_data["status"], "available")

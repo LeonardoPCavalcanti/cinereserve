@@ -6,12 +6,8 @@ from django.db import models
 
 class CinemaSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    movie = models.ForeignKey(
-        "movies.Movie", on_delete=models.CASCADE, related_name="sessions"
-    )
-    room = models.ForeignKey(
-        "seats.Room", on_delete=models.CASCADE, related_name="sessions"
-    )
+    movie = models.ForeignKey("movies.Movie", on_delete=models.CASCADE, related_name="sessions")
+    room = models.ForeignKey("seats.Room", on_delete=models.CASCADE, related_name="sessions")
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(blank=True)
     language = models.CharField(max_length=50)
@@ -28,7 +24,5 @@ class CinemaSession(models.Model):
 
     def save(self, *args, **kwargs):
         if self.start_time and self.movie_id:
-            self.end_time = self.start_time + timedelta(
-                minutes=self.movie.duration_minutes
-            )
+            self.end_time = self.start_time + timedelta(minutes=self.movie.duration_minutes)
         super().save(*args, **kwargs)

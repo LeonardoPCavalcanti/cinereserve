@@ -53,12 +53,8 @@ class TicketFlowTests(TestCase):
             total_rows=5,
             seats_per_row=10,
         )
-        self.seat1 = Seat.objects.create(
-            room=self.room, row="A", number=1
-        )
-        self.seat2 = Seat.objects.create(
-            room=self.room, row="A", number=2
-        )
+        self.seat1 = Seat.objects.create(room=self.room, row="A", number=1)
+        self.seat2 = Seat.objects.create(room=self.room, row="A", number=2)
 
         # Create session
         self.session = CinemaSession.objects.create(

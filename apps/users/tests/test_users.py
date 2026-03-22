@@ -33,9 +33,7 @@ class UserAuthTests(TestCase):
     # ── Registration ──────────────────────────────────────────────────
 
     def test_register_success(self) -> None:
-        response = self.client.post(
-            self.register_url, self.user_data, content_type="application/json"
-        )
+        response = self.client.post(self.register_url, self.user_data, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         data = response.json()
         self.assertIn("tokens", data)
@@ -46,16 +44,12 @@ class UserAuthTests(TestCase):
 
     def test_register_duplicate_email(self) -> None:
         self._create_user()
-        response = self.client.post(
-            self.register_url, self.user_data, content_type="application/json"
-        )
+        response = self.client.post(self.register_url, self.user_data, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_register_password_mismatch(self) -> None:
         payload = {**self.user_data, "password_confirm": "differentpassword"}
-        response = self.client.post(
-            self.register_url, payload, content_type="application/json"
-        )
+        response = self.client.post(self.register_url, payload, content_type="application/json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     # ── Login ─────────────────────────────────────────────────────────
@@ -139,6 +133,4 @@ class UserAuthTests(TestCase):
             {"refresh": tokens["refresh"]},
             content_type="application/json",
         )
-        self.assertEqual(
-            refresh_response.status_code, status.HTTP_401_UNAUTHORIZED
-        )
+        self.assertEqual(refresh_response.status_code, status.HTTP_401_UNAUTHORIZED)
