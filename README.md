@@ -6,6 +6,34 @@
 
 ---
 
+## Guia Rápido para o Avaliador
+
+```bash
+# 1. Clone e configure
+git clone https://github.com/SEU_USUARIO/cinereserve.git
+cd cinereserve
+cp .env.example .env
+
+# 2. Suba tudo (Postgres, Redis, API, Celery)
+docker-compose up --build -d
+
+# 3. Popule com dados de exemplo
+docker-compose exec web python manage.py seed_data
+
+# 4. Rode os testes (30 testes)
+docker-compose exec web pytest -v
+
+# 5. Acesse o Swagger para testar manualmente
+# http://localhost:8000/api/docs/
+
+# 6. Quando terminar
+docker-compose down
+```
+
+> Nenhuma configuração adicional necessária. Basta ter Docker instalado.
+
+---
+
 ## Sumário
 
 - [Visão Geral](#visão-geral)
@@ -283,6 +311,55 @@ Inclua o header em todas as requisições autenticadas:
 Authorization: Bearer <access_token>
 ```
 
+### Exemplo completo: Fluxo de reserva via curl
+
+```bash
+# 1. Registrar
+curl -X POST http://localhost:8000/api/v1/auth/register/ \
+  -H "Content-Type: application/json" \
+  -d '{"username":"leo","email":"leo@example.com","password":"minhasenha123","password_confirm":"minhasenha123"}'
+
+# 2. Login (copie o access token da resposta)
+curl -X POST http://localhost:8000/api/v1/auth/login/ \
+  -H "Content-Type: application/json" \
+  -d '{"email":"leo@example.com","password":"minhasenha123"}'
+
+# 3. Listar filmes
+curl http://localhost:8000/api/v1/movies/
+
+# 4. Ver sessões de um filme (substitua {movie_id} pelo id retornado)
+curl http://localhost:8000/api/v1/movies/{movie_id}/sessions/
+
+# 5. Ver mapa de assentos (substitua {session_id})
+curl http://localhost:8000/api/v1/sessions/{session_id}/seats/
+
+# 6. Reservar assento (substitua {session_id}, {seat_id} e {TOKEN})
+curl -X POST http://localhost:8000/api/v1/reservations/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {TOKEN}" \
+  -d '{"session_id":"{session_id}","seat_id":"{seat_id}"}'
+
+# 7. Checkout (substitua {reservation_id} retornado no passo anterior)
+curl -X POST http://localhost:8000/api/v1/checkout/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {TOKEN}" \
+  -d '{"reservation_id":"{reservation_id}"}'
+
+# 8. Ver meus ingressos
+curl http://localhost:8000/api/v1/tickets/ \
+  -H "Authorization: Bearer {TOKEN}"
+
+# 9. Ver ingressos ativos (sessões futuras)
+curl http://localhost:8000/api/v1/tickets/active/ \
+  -H "Authorization: Bearer {TOKEN}"
+
+# 10. Ver histórico completo
+curl http://localhost:8000/api/v1/tickets/history/ \
+  -H "Authorization: Bearer {TOKEN}"
+```
+
+> **Dica:** Também é possível testar tudo pelo **Swagger UI** em http://localhost:8000/api/docs/ — clique em "Authorize" e cole o access token.
+
 ---
 
 ## Fluxo de Reserva
@@ -317,6 +394,42 @@ O sistema usa **Redis distributed lock** com operações atômicas:
 
 ```bash
 docker-compose exec web pytest -v
+```
+
+**Saída esperada:**
+```
+apps/movies/tests/test_movies.py::MovieAPITestCase::test_list_movies PASSED
+apps/movies/tests/test_movies.py::MovieAPITestCase::test_list_movies_pagination PASSED
+apps/movies/tests/test_movies.py::MovieAPITestCase::test_movie_detail PASSED
+apps/movies/tests/test_movies.py::MovieAPITestCase::test_movie_detail_not_found PASSED
+apps/seats/tests/test_seats.py::RoomModelTest::test_room_str PASSED
+apps/seats/tests/test_seats.py::SeatModelTest::test_seat_label_computed_on_save PASSED
+apps/seats/tests/test_seats.py::SeatModelTest::test_seat_label_updates_on_change PASSED
+apps/seats/tests/test_seats.py::SeatModelTest::test_seat_str PASSED
+apps/sessions/tests/test_sessions.py::CinemaSessionTests::test_end_time_computed_on_save PASSED
+apps/sessions/tests/test_sessions.py::CinemaSessionTests::test_list_sessions_for_movie PASSED
+apps/sessions/tests/test_sessions.py::CinemaSessionTests::test_seat_map PASSED
+apps/sessions/tests/test_sessions.py::CinemaSessionTests::test_seat_map_auto_creates_statuses PASSED
+apps/sessions/tests/test_sessions.py::CinemaSessionTests::test_session_detail PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_active_tickets PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_cancel_reservation PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_checkout_expired PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_checkout_success PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_checkout_wrong_user PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_my_tickets PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_reserve_already_reserved PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_reserve_seat_success PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_ticket_detail PASSED
+apps/tickets/tests/test_tickets.py::TicketFlowTests::test_ticket_history PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_login_success PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_login_wrong_credentials PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_logout PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_register_duplicate_email PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_register_password_mismatch PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_register_success PASSED
+apps/users/tests/test_users.py::UserAuthTests::test_token_refresh PASSED
+
+============================= 30 passed ==============================
 ```
 
 ### Executar com cobertura
