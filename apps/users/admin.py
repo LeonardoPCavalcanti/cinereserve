@@ -14,7 +14,5 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ("email", "username")
     ordering = ("-created_at",)
 
-    fieldsets = BaseUserAdmin.fieldsets + (
-        ("Timestamps", {"fields": ("created_at", "updated_at")}),
-    )
+    fieldsets = BaseUserAdmin.fieldsets + (("Timestamps", {"fields": ("created_at", "updated_at")}),)
     readonly_fields = ("created_at", "updated_at")

@@ -52,16 +52,11 @@ class SessionSeatMapView(generics.GenericAPIView):
         existing = SeatStatus.objects.filter(session=session).exists()
         if not existing:
             seats = session.room.seats.all()
-            seat_statuses = [
-                SeatStatus(session=session, seat=seat, status="available")
-                for seat in seats
-            ]
+            seat_statuses = [SeatStatus(session=session, seat=seat, status="available") for seat in seats]
             SeatStatus.objects.bulk_create(seat_statuses)
 
         seat_statuses = (
-            SeatStatus.objects.filter(session=session)
-            .select_related("seat")
-            .order_by("seat__row", "seat__number")
+            SeatStatus.objects.filter(session=session).select_related("seat").order_by("seat__row", "seat__number")
         )
 
         serializer = SessionSeatMapSerializer(

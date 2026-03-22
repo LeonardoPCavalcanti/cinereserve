@@ -128,9 +128,9 @@ class CheckoutView(generics.CreateAPIView):
 
         # Validate reservation
         try:
-            seat_status = SeatStatus.objects.select_related(
-                "session", "session__movie", "session__room", "seat"
-            ).get(id=reservation_id)
+            seat_status = SeatStatus.objects.select_related("session", "session__movie", "session__room", "seat").get(
+                id=reservation_id
+            )
         except SeatStatus.DoesNotExist:
             return Response(
                 {"detail": "Reservation not found."},
