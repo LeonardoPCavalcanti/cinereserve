@@ -7,11 +7,7 @@ from rest_framework.response import Response
 from apps.seats.models import SeatStatus
 
 from .models import CinemaSession
-from .serializers import (
-    CinemaSessionDetailSerializer,
-    CinemaSessionListSerializer,
-    SessionSeatMapSerializer,
-)
+from .serializers import CinemaSessionDetailSerializer, CinemaSessionListSerializer, SessionSeatMapSerializer
 
 CACHE_TTL_SESSIONS = 60 * 2  # 2 minutes
 

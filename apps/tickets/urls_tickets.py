@@ -1,11 +1,6 @@
 from django.urls import path
 
-from apps.tickets.views import (
-    TicketActiveListView,
-    TicketDetailView,
-    TicketHistoryListView,
-    TicketListView,
-)
+from apps.tickets.views import TicketActiveListView, TicketDetailView, TicketHistoryListView, TicketListView
 
 urlpatterns = [
     path("", TicketListView.as_view(), name="ticket-list"),
