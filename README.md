@@ -1,5 +1,14 @@
 # CineReserve API
 
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
+![Django REST](https://img.shields.io/badge/Django_REST-092E20?logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?logo=redis&logoColor=white)
+![Celery](https://img.shields.io/badge/Celery-37814A?logo=celery&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-30_passing-30b8ff)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 **API RESTful de alta performance para gerenciamento de operações de cinema moderno** - descoberta de filmes, visualização de assentos em tempo real e reserva de ingressos com controle de concorrência.
 
 > Desenvolvido para o **Cinépolis Natal**
