@@ -5,7 +5,7 @@ import { api, ApiError } from '../api/client';
 import type { CinemaSession, SeatMap as SeatMapType, SeatStatus } from '../types';
 import SeatMap from '../components/SeatMap';
 import Spinner from '../components/Spinner';
-import { formatDateTime } from '../lib/format';
+import { formatDateTime } from '../utils/format';
 
 /**
  * Seleção de assento + criação da reserva.

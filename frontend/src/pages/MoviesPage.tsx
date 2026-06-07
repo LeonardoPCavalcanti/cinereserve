@@ -5,7 +5,7 @@ import { api } from '../api/client';
 import type { Movie } from '../types';
 import Poster from '../components/Poster';
 import Spinner from '../components/Spinner';
-import { formatDuration } from '../lib/format';
+import { formatDuration } from '../utils/format';
 
 /** Vitrine de filmes em cartaz — ponto de entrada do fluxo de reserva. */
 export default function MoviesPage() {

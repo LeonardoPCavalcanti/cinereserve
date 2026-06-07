@@ -5,7 +5,7 @@ import { api } from '../api/client';
 import type { CinemaSession, Movie } from '../types';
 import Poster from '../components/Poster';
 import Spinner from '../components/Spinner';
-import { formatDateTime, formatDuration, formatTime } from '../lib/format';
+import { formatDateTime, formatDuration, formatTime } from '../utils/format';
 
 /** Detalhe do filme + lista de sessões disponíveis para reserva. */
 export default function MovieSessionsPage() {

@@ -45,6 +45,6 @@ src/
 ├── api/         client (mock/real toggle) + camada de demo
 ├── components/  Header, Poster, SeatMap, Spinner
 ├── pages/       Movies, MovieSessions, SeatSelection, Checkout
-├── lib/         formatação de datas/duração + pôster por gradiente
+├── utils/       formatação de datas/duração + pôster por gradiente
 └── types.ts     tipos espelhando os serializers da API
 ```

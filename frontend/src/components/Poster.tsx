@@ -1,4 +1,4 @@
-import { posterGradient } from '../lib/format';
+import { posterGradient } from '../utils/format';
 
 interface PosterProps {
   title: string;

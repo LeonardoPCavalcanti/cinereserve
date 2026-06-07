@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CheckCircle2, Clock, Armchair, Film, Home } from 'lucide-react';
 import { api } from '../api/client';
 import type { Reservation, Ticket } from '../types';
-import { formatDateTime } from '../lib/format';
+import { formatDateTime } from '../utils/format';
 
 /**
  * Confirmação da compra. Recebe a reserva via state de navegação (com backup
