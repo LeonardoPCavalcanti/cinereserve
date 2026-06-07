@@ -68,3 +68,4 @@ dmypy.json
 cython_debug/
 staticfiles/
 media/
+celerybeat-schedule

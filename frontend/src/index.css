@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-white/90 font-sans antialiased;
+  background-image:
+    radial-gradient(60rem 40rem at 80% -10%, rgba(245, 197, 24, 0.06), transparent),
+    radial-gradient(50rem 40rem at -10% 10%, rgba(124, 58, 237, 0.07), transparent);
+  background-attachment: fixed;
+}
+
+/* Acessibilidade: respeita preferência de movimento reduzido. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Faixa de "tela" do cinema no topo do mapa de assentos. */
+.screen-arc {
+  height: 10px;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: linear-gradient(180deg, rgba(245, 197, 24, 0.55), rgba(245, 197, 24, 0));
+  box-shadow: 0 0 40px 8px rgba(245, 197, 24, 0.25);
+}
