@@ -14,17 +14,28 @@ const config: Config = {
         muted: '#9a9ab0',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+        sans: ['Sora', 'system-ui', 'sans-serif'],
+        display: ['"Bebas Neue"', 'Sora', 'sans-serif'],
+      },
+      letterSpacing: {
+        marquee: '0.08em',
       },
       keyframes: {
         'fade-up': {
           from: { opacity: '0', transform: 'translateY(12px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '92%': { opacity: '1' },
+          '94%': { opacity: '0.72' },
+          '96%': { opacity: '1' },
+          '98%': { opacity: '0.85' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.4s cubic-bezier(0.16,1,0.3,1) both',
+        flicker: 'flicker 6s linear infinite',
       },
     },
   },

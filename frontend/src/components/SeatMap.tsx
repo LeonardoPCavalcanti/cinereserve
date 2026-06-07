@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import type { SeatStatus } from '../types';
 
 interface SeatMapProps {
@@ -41,7 +42,7 @@ export default function SeatMap({ seats, selectedId, onSelect }: SeatMapProps) {
                 const occupied = seat.status !== 'available';
                 const selected = seat.seat_id === selectedId;
                 return (
-                  <button
+                  <motion.button
                     key={seat.seat_id}
                     type="button"
                     disabled={occupied}
@@ -49,17 +50,24 @@ export default function SeatMap({ seats, selectedId, onSelect }: SeatMapProps) {
                     title={`${seat.label}${occupied ? ' · ocupado' : ''}`}
                     aria-label={`Assento ${seat.label}${occupied ? ', ocupado' : ', disponível'}`}
                     aria-pressed={selected}
+                    whileHover={occupied ? undefined : { scale: 1.15 }}
+                    whileTap={occupied ? undefined : { scale: 0.9 }}
+                    animate={
+                      selected
+                        ? { scale: [1, 1.35, 1.12], transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
+                        : { scale: 1 }
+                    }
                     className={[
-                      'h-7 w-7 rounded-md text-[0.58rem] font-600 transition-all',
+                      'grid h-7 w-7 place-items-center rounded-md text-[0.58rem] font-600',
                       occupied
                         ? 'cursor-not-allowed bg-line/60 text-white/20'
                         : selected
-                          ? 'scale-110 bg-amber text-ink shadow-lg shadow-amber/30'
+                          ? 'bg-amber text-ink shadow-lg shadow-amber/40 ring-2 ring-amber/60'
                           : 'bg-white/10 text-white/50 hover:bg-amber/30 hover:text-white',
                     ].join(' ')}
                   >
                     {seat.number}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>

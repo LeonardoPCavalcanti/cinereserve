@@ -71,7 +71,7 @@ export default function CheckoutPage() {
           <div className="flex items-center gap-3 border-b border-dashed border-line bg-amber/10 p-5">
             <CheckCircle2 className="text-amber" />
             <div>
-              <p className="font-display text-lg font-700">Compra confirmada</p>
+              <p className="font-display text-2xl tracking-marquee">Compra confirmada</p>
               <p className="text-xs text-muted">Apresente este código na entrada</p>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default function CheckoutPage() {
   const expired = remaining <= 0;
   return (
     <div className="mx-auto max-w-md animate-fade-up py-6">
-      <h1 className="font-display text-2xl font-700">Confirmar compra</h1>
+      <h1 className="font-display text-4xl tracking-marquee">Confirmar compra</h1>
       <p className="mt-1 text-sm text-muted">Revise os dados e finalize sua reserva.</p>
 
       <div className="mt-5 rounded-2xl border border-line bg-panel p-6">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Ticket as TicketIcon, AlertTriangle } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { api, ApiError } from '../api/client';
 import type { CinemaSession, SeatMap as SeatMapType, SeatStatus } from '../types';
 import SeatMap from '../components/SeatMap';
@@ -70,7 +71,7 @@ export default function SeatSelectionPage() {
       </Link>
 
       <div className="mb-6">
-        <h1 className="font-display text-2xl font-700 sm:text-3xl">{session.movie.title}</h1>
+        <h1 className="font-display text-4xl tracking-marquee sm:text-5xl">{session.movie.title}</h1>
         <p className="mt-1 text-sm text-muted">
           {formatDateTime(session.start_time)} · {session.room.name} · {session.format} ·{' '}
           {session.language}
@@ -86,7 +87,7 @@ export default function SeatSelectionPage() {
 
         {/* Painel de resumo / ação */}
         <aside className="h-fit rounded-2xl border border-line bg-panel p-5 lg:sticky lg:top-24">
-          <h2 className="font-display text-lg font-600">Sua seleção</h2>
+          <h2 className="font-display text-2xl tracking-marquee">Sua seleção</h2>
 
           {notice && (
             <div className="mt-3 flex items-start gap-2 rounded-lg border border-amber/40 bg-amber/10 p-3 text-xs text-amber">
@@ -97,9 +98,18 @@ export default function SeatSelectionPage() {
 
           <div className="mt-4 flex items-center justify-between border-b border-line pb-4">
             <span className="text-sm text-muted">Assento</span>
-            <span className="font-display text-2xl font-700 text-amber">
-              {selected ? selected.label : '—'}
-            </span>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.span
+                key={selected ? selected.label : 'none'}
+                initial={{ scale: 0.5, opacity: 0, y: -6 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.5, opacity: 0, y: 6 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 26 }}
+                className="font-display text-4xl tracking-marquee text-amber"
+              >
+                {selected ? selected.label : '—'}
+              </motion.span>
+            </AnimatePresence>
           </div>
 
           <button

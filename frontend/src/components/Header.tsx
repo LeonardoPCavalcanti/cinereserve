@@ -8,11 +8,11 @@ export default function Header() {
     <header className="sticky top-0 z-40 border-b border-line/70 bg-ink/80 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5">
         <Link to="/" className="group flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-amber text-ink">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-amber text-ink shadow-lg shadow-amber/30 transition-transform group-hover:rotate-[-6deg]">
             <Clapperboard size={20} strokeWidth={2.4} />
           </span>
-          <span className="font-display text-lg font-700 tracking-tight">
-            Cine<span className="text-amber">Reserve</span>
+          <span className="font-display text-2xl tracking-marquee">
+            Cine<span className="animate-flicker text-amber">Reserve</span>
           </span>
         </Link>
 

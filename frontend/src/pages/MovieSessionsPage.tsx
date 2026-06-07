@@ -41,7 +41,7 @@ export default function MovieSessionsPage() {
         </div>
 
         <div>
-          <h1 className="font-display text-3xl font-700">{movie.title}</h1>
+          <h1 className="font-display text-5xl leading-[0.92] tracking-marquee sm:text-6xl">{movie.title}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
             <span className="flex items-center gap-1">
               <Clock size={14} /> {formatDuration(movie.duration_minutes)}
@@ -52,7 +52,7 @@ export default function MovieSessionsPage() {
           <p className="mt-4 max-w-2xl leading-relaxed text-white/70">{movie.description}</p>
           {movie.cast && <p className="mt-2 text-sm text-muted">Elenco: {movie.cast}</p>}
 
-          <h2 className="mb-3 mt-8 flex items-center gap-2 font-display text-lg font-600">
+          <h2 className="mb-3 mt-8 flex items-center gap-2 font-display text-2xl tracking-marquee">
             <Calendar size={18} className="text-amber" /> Sessões
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

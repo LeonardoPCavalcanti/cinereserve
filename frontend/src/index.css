@@ -12,10 +12,49 @@ html {
 
 body {
   @apply bg-ink text-white/90 font-sans antialiased;
+  position: relative;
+  min-height: 100vh;
+  background-color: #0b0b0f;
   background-image:
-    radial-gradient(60rem 40rem at 80% -10%, rgba(245, 197, 24, 0.06), transparent),
-    radial-gradient(50rem 40rem at -10% 10%, rgba(124, 58, 237, 0.07), transparent);
+    radial-gradient(70rem 48rem at 82% -12%, rgba(245, 197, 24, 0.10), transparent 60%),
+    radial-gradient(55rem 42rem at -12% 8%, rgba(124, 58, 237, 0.09), transparent 60%),
+    radial-gradient(40rem 40rem at 50% 120%, rgba(245, 197, 24, 0.05), transparent 60%);
   background-attachment: fixed;
+}
+
+/* Vinheta de sala escura: borda do quadro escurece para focar o centro. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Grão de filme: textura sutil de projeção sobre toda a tela. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.6s steps(4) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-4%, 2%); }
+  50% { transform: translate(3%, -3%); }
+  75% { transform: translate(-2%, 4%); }
+}
+
+/* O conteúdo da app fica acima da vinheta/grão. */
+#root {
+  position: relative;
+  z-index: 3;
 }
 
 /* Acessibilidade: respeita preferência de movimento reduzido. */
