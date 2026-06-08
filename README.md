@@ -23,6 +23,40 @@
 
 ---
 
+## O que este projeto ensina
+
+> Este projeto é, antes de tudo, um estudo prático de **controle de concorrência** — o problema clássico de duas pessoas tentando reservar o mesmo assento no mesmo instante. Abaixo, os conceitos de Ciência da Computação que ele torna tangíveis.
+
+### 1. Condição de corrida (race condition)
+Sem coordenação, dois pedidos simultâneos podem ler "assento livre" e **ambos** gravar a reserva — o assento é vendido duas vezes. É o exemplo canônico de *lost update*. A solução exige uma operação **atômica**: ler-e-escrever como um passo indivisível.
+
+### 2. Lock distribuído com Redis (`SET NX EX`)
+O assento é travado com uma única operação atômica:
+```
+SET seat_lock:{sessao}:{assento} {user_id} NX EX 600
+```
+- **`NX`** (*set if Not eXists*) — só cria a chave se ela ainda não existir. É isto que vence a corrida: apenas **um** dos pedidos consegue criar o lock; o outro recebe `409 Conflict`.
+- **`EX 600`** — *time-to-live* de 10 minutos. Se o usuário abandonar o carrinho, o lock **expira sozinho**, evitando assentos eternamente presos.
+
+### 3. Liberação segura com script Lua (check-and-delete atômico)
+Liberar um lock não é só `DELETE`: é preciso garantir que **só o dono** o libere. Um *check-then-act* ingênuo (`GET` e depois `DEL`) tem sua própria janela de corrida. Por isso a liberação roda um **script Lua** no Redis — que executa de forma atômica: "se o valor for meu, apague". Mesmo padrão do algoritmo de lock distribuído *Redlock*.
+
+### 4. Idempotência e expiração assíncrona
+Um worker **Celery Beat** varre o banco a cada 60s reconciliando locks expirados no Redis com o status no PostgreSQL — um exemplo de **processo de reconciliação** entre duas fontes de verdade (cache rápido x banco durável).
+
+### 5. Performance de banco: o problema N+1
+Listar sessões com seus filmes pode disparar 1 query + N queries (uma por filme). O projeto usa `select_related`/`prefetch_related` para resolver tudo em poucos JOINs — o antídoto clássico ao **N+1 query problem**.
+
+### 6. Autenticação stateless com JWT
+*JSON Web Tokens* permitem autenticar sem sessão no servidor (escala horizontalmente), ao custo de não poder "deslogar" um token. O projeto contorna isso com uma **blacklist** de refresh tokens — a discussão clássica sobre o trade-off entre statelessness e revogação.
+
+**Leituras de referência:**
+- Martin Kleppmann, *Designing Data-Intensive Applications* — cap. 7 (Transações) e cap. 8 (concorrência e *lost updates*).
+- [Distributed Locks with Redis](https://redis.io/docs/manual/patterns/distributed-locks/) — documentação do padrão Redlock.
+- [The N+1 Query Problem](https://docs.djangoproject.com/en/stable/topics/db/optimization/) — otimização de queries no Django.
+
+---
+
 ## Guia Rápido para o Avaliador
 
 ```bash
@@ -53,6 +87,7 @@ docker-compose down
 
 ## Sumário
 
+- [O que este projeto ensina](#o-que-este-projeto-ensina)
 - [Visão Geral](#visão-geral)
 - [Stack Tecnológica](#stack-tecnológica)
 - [Arquitetura do Projeto](#arquitetura-do-projeto)
