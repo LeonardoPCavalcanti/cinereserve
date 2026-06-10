@@ -57,11 +57,11 @@ Listar sessões com seus filmes pode disparar 1 query + N queries (uma por filme
 
 ---
 
-## Guia Rápido para o Avaliador
+## Início Rápido
 
 ```bash
 # 1. Clone e configure
-git clone https://github.com/SEU_USUARIO/cinereserve.git
+git clone https://github.com/LeonardoPCavalcanti/cinereserve.git
 cd cinereserve
 cp .env.example .env
 
@@ -74,10 +74,10 @@ docker-compose exec web python manage.py seed_data
 # 4. Rode os testes (30 testes)
 docker-compose exec web pytest -v
 
-# 5. Acesse o Swagger para testar manualmente
+# 5. Swagger — documentação interativa da API
 # http://localhost:8000/api/docs/
 
-# 6. Quando terminar
+# 6. Encerrar
 docker-compose down
 ```
 
