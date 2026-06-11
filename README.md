@@ -13,11 +13,11 @@
 
 > Desenvolvido para o **Cinépolis Natal**
 
-### 🎬 Demo ao vivo
+### Demo ao vivo
 
-[![CineReserve — fluxo de reserva de assentos](docs/preview.png)](https://leonardopcavalcanti.github.io/cinereserve/)
+[![Fluxo de reserva: filme → sessão → mapa de assentos → checkout](docs/demo-reserva.gif)](https://leonardopcavalcanti.github.io/cinereserve/)
 
-**[leonardopcavalcanti.github.io/cinereserve](https://leonardopcavalcanti.github.io/cinereserve/)** — frontend React que consome esta API: filmes em cartaz → sessões → **mapa de assentos interativo** → reserva com lock de concorrência → checkout com ingresso.
+**[leonardopcavalcanti.github.io/cinereserve](https://leonardopcavalcanti.github.io/cinereserve/)** — frontend React que consome esta API: filmes em cartaz → sessões → **mapa de assentos interativo** → reserva com lock de concorrência → checkout com ingresso. O GIF acima é o fluxo real do demo.
 
 > Projeto **full-stack**: backend Django REST (este repositório) + frontend React em [`frontend/`](frontend/). O demo roda em modo simulado (mock) para funcionar sem o backend hospedado; basta definir `VITE_API_BASE` para apontar à API real.
 
