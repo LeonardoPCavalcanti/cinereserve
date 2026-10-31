@@ -29,6 +29,7 @@ export default function Header() {
             href="https://github.com/LeonardoPCavalcanti/cinereserve"
             target="_blank"
             rel="noreferrer"
+            aria-label="Repositório do CineReserve no GitHub"
             className="flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-sm text-muted transition-colors hover:border-amber/40 hover:text-white"
           >
             <Github size={16} />
