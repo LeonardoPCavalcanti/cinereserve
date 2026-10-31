@@ -36,7 +36,7 @@ export default function Poster({ title, genre, url, className = '' }: PosterProp
             {genre}
           </span>
         )}
-        <h3 className="font-display text-lg font-700 leading-tight drop-shadow">{title}</h3>
+        <h2 className="font-display text-lg font-700 leading-tight drop-shadow">{title}</h2>
       </div>
     </div>
   );
